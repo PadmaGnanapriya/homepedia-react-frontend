@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./assets/styles/main";
+
+
+:root {
+  --very-light-pink: #f892e0;
+  --light-pink: #ef42c9;
+  --pink: #d11fa9;
+  --dark-pink: #b61892;
+  --very-dark-pink: #77085d;
+
+  --very-light-cornflower-blue: #a6b5f1;
+  --light-cornflower-blue: #94a8ee;
+  --cornflower-blue: #798cd3;
+  --dark-cornflower-blue: #4c5d9d;
+  --very-dark-cornflower-blue: #28335e;
+
+  //--dodgerblue : #3885cf;
+  --very-light-dodger-blue: #8fc1f3;
+  --light-dodger-blue: #51a4f6;
+  --dodger-blue: dodgerblue;
+  --dark-dodger-blue: #1569bb;
+  --very-dark-dodger-blue: #033565;
+
+  --very-light-violet: #a183d5;
+  --light-violet: #7558a6;
+  --violet: #674ad8;
+  --dark-violet: #3a1d7c;
+  --very-dark-violet: #2b155e;
+  --mega-dark-violet: #1A0845FF;
+}
