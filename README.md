@@ -1,3 +1,23 @@
+
+# Homepedia (Frontend)
+
+## Group Members  
+
+| Student ID  | Student Name        | Github Username |
+|-------------|---------------------|-----------------|
+| SE/2017/014 | Padma Gnanapriya    | PadmaGnanapriya |
+| SE/2017/020 | Chamodi Jayodya     | ChamodiJayodya  |
+| SE/2017/023 | Sunanda Karunajeewa | Karunajeewa     |
+| SE/2017/039 | Hansa Sadamal       | HansaSandamal   |  
+
+---------------------------------------------------------
+<!-- ## High Level Diagram -->
+
+<!-- <img src=""> -->
+<br>
+<br>
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

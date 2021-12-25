@@ -24,3 +24,5 @@ export const ROUTE_PATH = {
   FAQ_MANAGEMENT: '/faq-management',
   TERMS_AND_CONDITIONS: '/terms-and-conditions',
 }
+
+export const BASE_URL = 'https://www.homepedia.lk';
