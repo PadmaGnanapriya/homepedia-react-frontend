@@ -1,0 +1,25 @@
+.bg-image-div {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100%;
+  background-position: center;
+  position: relative;
+  //z-index: -1;
+  padding: 10px;
+
+
+  &:before {
+    content: "";
+    //background: rgba(0,0,0,.6);  // To dark mode
+    background: rgba(255, 255, 255, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    //z-index: -1;
+  }
+
+}

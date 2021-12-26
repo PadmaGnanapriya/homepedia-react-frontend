@@ -1,0 +1,24 @@
+.card-div-fluid {
+  background-color: rgba(255, 255, 255, .7);
+  backdrop-filter: blur(5px);
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+
+  label {
+    font-size: 13px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, .85);
+    -webkit-box-shadow: 3px 3px 4px 4px rgba(0, 0, 0, 0.45);
+    box-shadow: 3px 3px 4px 4px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.card-div {
+  @extend .card-div-fluid;
+  width: 90vw;
+  max-width: 400px;
+  margin: 10vh auto 20px auto;
+}
