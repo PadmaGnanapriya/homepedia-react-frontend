@@ -9,7 +9,7 @@ import {Route, Routes} from "react-router";
 function App() {
   const routeList = routes.map((route: any, index) => {
     return (route.component) ? (
-        <Route key={index+ '-page'}path={route.path} element={<route.component/>}
+        <Route key={index+ '-page'} path={route.path} element={<route.component/>}
               />
     ) : null;
   });

@@ -6,7 +6,7 @@ export const ROUTE_PATH = {
   CATEGORIES: '/categories', //
   FIND_SERVICE: '/find-service',
   SERVICE_SUPPLIER_OVERVIEW: '/service-supplier-overview', 
-  PAGE_NOT_FOUND: 'page-not-found',
+  PAGE_NOT_FOUND: '/*',
   FAQ: '/faq',
   LOGIN: '/login',
   REGISTER: '/register',
