@@ -1,0 +1,29 @@
+.header-div-top {
+  background-color: var(--very-dark-pink);
+  border-bottom: 0.5px solid #e5e5e5;
+  font-size: smaller;
+
+  span {
+    color: #e5e3e3 !important;
+  }
+}
+
+.header-div-bottom {
+  -moz-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  background: rgb(2, 0, 36);
+  color: #e5e3e3 !important;
+  background: url("https://www.transparenttextures.com/patterns/robots.png"), linear-gradient(0deg, var(--very-dark-violet) 0%, var(--very-dark-pink) 100%);
+  //background:  linear-gradient(0deg,var(--dark-violet) 0%,  var(--very-dark-violet) 100%);
+
+  a.nav-link {
+    color: #e5e3e3 !important;
+  }
+
+  img {
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+}
