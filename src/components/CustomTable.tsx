@@ -33,6 +33,9 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
 
   const tableRef = React.createRef();
 
+  const editable = props.data.map((o: any) => ({ ...o }));
+
+
   return (
     <Container className="py-5">
       <MaterialTable
@@ -44,7 +47,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
           addRowPosition: 'first'
         }}
         columns={props.columns}
-        data={props.data}
+        data={editable}
         actions={props.actions}
       />
     </Container>
