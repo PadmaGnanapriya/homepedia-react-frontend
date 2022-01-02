@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { API } from './api/REST_API'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {API} from './api/REST_API'
 
 type stateType = {
   dataSet: any[],
@@ -26,6 +26,14 @@ export const addNewMessage = createAsyncThunk(
   }
 )
 
+export const deleteMessage = createAsyncThunk(
+  'messages/deleteMessage',
+  async (id: number) => {
+    const response = await API.DELETE('messages/' + id)
+    return response.data
+  }
+)
+
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -46,8 +54,11 @@ const messagesSlice = createSlice({
       .addCase(addNewMessage.fulfilled, (state: stateType, action) => {
         state.dataSet.push(action.payload)
       })
+      .addCase(deleteMessage.fulfilled, (state: stateType, action) => {
+        state.dataSet = state.dataSet.filter((recode)=> recode._id !== action.payload._id)
+      })
   },
 })
 
 export default messagesSlice.reducer
-export const selectAllMessages = (state:any) => state.messages.dataSet;
+export const selectAllMessages = (state: any) => state.messages.dataSet;

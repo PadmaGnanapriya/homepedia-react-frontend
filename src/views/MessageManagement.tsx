@@ -1,6 +1,6 @@
 import React, {forwardRef, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchMessages, selectAllMessages} from "../store/messagesSlice";
+import {deleteMessage, fetchMessages, selectAllMessages} from "../store/messagesSlice";
 import CustomTable from "../components/CustomTable";
 
 const MessageManagement: React.FC = () => {
@@ -31,7 +31,7 @@ const MessageManagement: React.FC = () => {
         {
             icon: forwardRef((props, ref) => <span className="icon-delete" {...props}  />),
             tooltip: 'Delete',
-            onClick: (event: any, rowData: any) => console.log("You saved ", rowData)
+            onClick: (event: any, rowData: any) => dispatch((deleteMessage(rowData._id)))
         }
     ]
 
