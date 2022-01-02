@@ -36,7 +36,7 @@ const MessageManagement: React.FC = () => {
     ]
 
     return (
-      <CustomTable title={'Notification Management'} data={data} columns={columns} actions={actions}/>
+      <CustomTable title={'Message Management'} data={data} columns={columns} actions={actions}/>
     )
 }
 
