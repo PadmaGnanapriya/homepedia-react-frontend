@@ -26,6 +26,21 @@ export const API = {
         throw e
       })
   },
+  PATCH: async (endpoint: string, data: any) => {
+    return await axios.patch(`${HOST}${endpoint}`,
+      data,
+      {
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
+
+      })
+      .then((response) => response)
+      .catch((e) => {
+        throw e
+      })
+  },
 
   PUT: async (endpoint: string, data: any) => {
     return await axios.put(`${HOST}${endpoint}`,

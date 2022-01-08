@@ -23,6 +23,7 @@ export const ROUTE_PATH = {
   INCOME_MANAGEMENT: '/income-management',
   FAQ_MANAGEMENT: '/faq-management',
   TERMS_AND_CONDITIONS: '/terms-and-conditions',
+  USER_REVIEW_MANAGEMENT: '/user-review-management'
 }
 
 export const BASE_URL = 'https://www.homepedia.lk';

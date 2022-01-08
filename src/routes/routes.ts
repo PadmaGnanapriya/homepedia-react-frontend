@@ -1,5 +1,6 @@
 import React from "react";
 import { ROUTE_PATH } from "../constants/RoutePaths";
+import UserReviewManagement from "../views/UserReviewManagement";
 
 const Home = React.lazy(() => import('../views/Home'));
 const Login = React.lazy(() => import('../views/Login'));
@@ -32,6 +33,7 @@ export const routes = [
   { path: ROUTE_PATH.SERVICE_SUPPLIER_MANAGEMENT, exact: false, component: ServiceSupplierManagement },
   { path: ROUTE_PATH.NOTIFICATION_MANAGEMENT, exact: false, component: NotificationManagement },
   { path: ROUTE_PATH.INCOME_MANAGEMENT, exact: false, component: IncomeManagement },
+  { path: ROUTE_PATH.USER_REVIEW_MANAGEMENT, exact: false, component: UserReviewManagement },
   { path: ROUTE_PATH.TERMS_AND_CONDITIONS, exact: false, component: TermsAndConditions },
   { path: ROUTE_PATH.FAQ, exact: false, component: Faq },
   { path: ROUTE_PATH.FORGOT_PASSWORD, exact: false, component: ForgotPassword },
