@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import messagesReducer from "./messagesSlice"
 import userReviewsReducer from "./userReviewsSlice";
+import paymentReducer from "./paymentSlice";
 
 export default configureStore({
     reducer: {
         messages: messagesReducer,
-        userReviews: userReviewsReducer
+        userReviews: userReviewsReducer,
+        payments: paymentReducer
     },
 })
