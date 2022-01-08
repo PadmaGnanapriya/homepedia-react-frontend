@@ -1,15 +1,28 @@
 import React, {useEffect, useRef} from 'react';
 import {Carousel, Col, Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import ServiceSupplierCard from "../components/ServiceSupplierCard";
-import {serviceTypes, suppliers} from "../store/dummyData";
+import { suppliers} from "../store/dummyData";
 import bannerImage from "../assets/images/background.webp"
 import ServiceSupplierBanner from "../components/ServiceSupplierBanner";
 import CategoryCard from "../components/CategoryCard";
 import {useLocation} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 
 const Home: React.FC = () => {
     const myRef = useRef(null);
     const location = useLocation();
+    const dispatch = useDispatch()
+
+    const serviceCategories = useSelector(selectAllServiceCategories)
+    const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
+    const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
+
+    useEffect(() => {
+        if (serviceCategoriesStatus === 'idle') {
+            dispatch(fetchServiceCategories());
+        }
+    }, [serviceCategoriesStatus, dispatch])
 
     useEffect(() => {
         if (location.hash !== '') {
@@ -68,12 +81,11 @@ const Home: React.FC = () => {
                   <br/>
                   <h3 id="categories" ref={myRef} className="text-light">Categories</h3>
                   {
-                      serviceTypes.map(serviceType => <CategoryCard sm={6} md={6} lg={4} label={serviceType.label} icon={serviceType.icon}/>)
+                      serviceCategories.map((serviceCategory:any) =>
+                        <CategoryCard sm={6} md={6} lg={4} label={serviceCategory.name} icon={serviceCategory.icon}/>)
                   }
               </Row>
           </Container>
-
-
       </Container>
     );
 }

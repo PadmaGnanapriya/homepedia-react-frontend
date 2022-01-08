@@ -1,10 +1,23 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import ServiceSupplierCard from "../components/ServiceSupplierCard";
-import {cities, serviceTypes, suppliers} from "../store/dummyData";
+import {cities, suppliers} from "../store/dummyData";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 
 const FindService: React.FC = () => {
     const [activeLinkIndex, setActiveLinkIndex] = useState(0);
+  const dispatch = useDispatch()
+
+  const serviceCategories = useSelector(selectAllServiceCategories)
+  const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
+  const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
+
+  useEffect(() => {
+    if (serviceCategoriesStatus === 'idle') {
+      dispatch(fetchServiceCategories());
+    }
+  }, [serviceCategoriesStatus, dispatch])
 
     const handleOnClickSideNavLink = (index: number) => {
         setActiveLinkIndex(index)
@@ -18,10 +31,10 @@ const FindService: React.FC = () => {
                   }
               </DropdownButton>
               {
-                  serviceTypes.map((serviceType, index) =>
+                  serviceCategories.map((serviceType:any, index:number) =>
                     <div onClick={() => handleOnClickSideNavLink(index)} key={index}
-                         className={activeLinkIndex === index ? 'side-link active py-2 px-4' : 'side-link py-2 px-4'}><span
-                      className={serviceType.icon}/> {serviceType.label}</div>)
+                         className={activeLinkIndex === index ? 'side-link active py-2 px-4' : 'side-link py-2 px-4'}>
+                      <span className={serviceType.icon}/> {serviceType.name}</div>)
               }
           </div>
 
