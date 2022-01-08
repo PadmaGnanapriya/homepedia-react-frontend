@@ -1,87 +1,22 @@
-import React, {forwardRef} from "react";
+import React, {forwardRef, useEffect} from "react";
 import CustomTable from "../components/CustomTable";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchMessages, selectAllMessages} from "../store/messagesSlice";
+import {fetchAllServiceSuppliers, selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
 
 const ServiceSupplierManagement: React.FC = () => {
-    const data = [
+    const dispatch = useDispatch()
+    const data = useSelector(selectAllServiceSuppliers)
+    const MessageStatus = useSelector((state: any) => state.messages.status)
+    const error = useSelector((state: any) => state.messages.error)
 
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        },
+    useEffect(() => {
+        if (MessageStatus === 'idle') {
+            dispatch(fetchAllServiceSuppliers());
+        }
+    }, [MessageStatus, dispatch])
+
+    const data2 = [
         {
             username: "Padma Gnanapriya",
             nic: '9705523232V',
@@ -99,17 +34,12 @@ const ServiceSupplierManagement: React.FC = () => {
     ];
 
     const columns = [
-        {title: 'Username', field: 'username'},
-        // {title: 'NIC', field: 'nic'},
+        {title: 'Full Name', field: 'fullName'},
         {title: 'Gender', field: 'gender'},
         {title: 'Email', field: 'email'},
-        {title: 'Contact No', field: 'contactNo'},
-        {title: 'Service Area', field: 'serviceArea'},
-        // {title: 'Service Types', field: 'serviceTypes'},
-        // {title: 'Working Time', field: 'workingTime'},
-        // {title: 'Certificates', field: 'certificates'},
-        // {title: 'Working Experience', field: 'workingExperience'},
-        {title: 'selectedPackage', field: 'selectedPackage'},
+        {title: 'Contact No', field: 'contactNumber'},
+        {title: 'Service Area', field: 'workingArea'},
+        {title: 'selectedPackage', field: 'selectedPlan'},
 
     ];
 
@@ -131,7 +61,7 @@ const ServiceSupplierManagement: React.FC = () => {
             onClick: (event: any, rowData: any) => console.log("You saved 1", rowData)
         },
         {
-            icon: forwardRef((props, ref) => <span className="icon-delete" {...props}  />),
+            icon: forwardRef((props, ref) => <span  className="icon-delete" {...props}  />),
             tooltip: 'Delete Permanently',
             onClick: (event: any, rowData: any) => console.log("You saved 1", rowData)
         },
