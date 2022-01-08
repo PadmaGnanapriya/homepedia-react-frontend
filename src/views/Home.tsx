@@ -8,6 +8,7 @@ import CategoryCard from "../components/CategoryCard";
 import {useLocation} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
+import Loading from "../components/Loading";
 
 const Home: React.FC = () => {
     const myRef = useRef(null);
@@ -80,6 +81,10 @@ const Home: React.FC = () => {
                   <hr/>
                   <br/>
                   <h3 id="categories" ref={myRef} className="text-light">Categories</h3>
+                  {
+                      serviceCategoriesStatus === 'loading' &&
+                    <Loading/>
+                  }
                   {
                       serviceCategories.map((serviceCategory:any) =>
                         <CategoryCard sm={6} md={6} lg={4} label={serviceCategory.name} icon={serviceCategory.icon}/>)
