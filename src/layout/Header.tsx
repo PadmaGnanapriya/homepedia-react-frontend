@@ -3,13 +3,17 @@ import {Button, Form, FormControl, Image, Nav, Navbar, NavDropdown, OverlayTrigg
 import {Link} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 import logo from "../assets/images/logo2.webp";
+import {useDispatch, useSelector} from "react-redux";
+import {loggedRole, signOut} from "../store/authSlice";
 
 const Header: React.FC = () => {
-    const [role, setRole] = useState('ADMIN'); // ADMIN, SERVICE_SUPPLIER,VISITOR
+    const dispatch = useDispatch();
+    // const role = useSelector(loggedRole);
+    const [role, setRole] = useState('Administrator'); // ADMIN, SERVICE_SUPPLIER,VISITOR
     // const [role, setRole] = useState('SERVICE_SUPPLIER'); // ADMIN, SERVICE_SUPPLIER,VISITOR
 
     const handleLogOut = () => {
-        setRole('VISITOR');
+        dispatch(signOut());
     }
     return (
       <React.Fragment>
@@ -48,7 +52,7 @@ const Header: React.FC = () => {
                       <Nav.Link as={Link} to={ROUTE_PATH.ABOUT}>About</Nav.Link>
                       <Nav.Link as={Link} to={ROUTE_PATH.CONTACT}>Contact Us</Nav.Link>
                       {
-                          role === 'ADMIN' ?
+                          role === 'Administrator' ?
                             <Nav.Link as={Link} to={ROUTE_PATH.DASHBOARD}>Dashboard</Nav.Link> :
                             <NavDropdown title="More" id="collasible-nav-dropdown3">
                                 <NavDropdown.Item as={Link} to={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms & Conditions</NavDropdown.Item>
@@ -61,7 +65,7 @@ const Header: React.FC = () => {
                   </Nav>
                   <Nav>
                       {
-                        role === 'SERVICE_SUPPLIER' &&
+                        role === 'ServiceSupplier' &&
                         <React.Fragment>
                             <OverlayTrigger
                               trigger="click"
@@ -99,7 +103,7 @@ const Header: React.FC = () => {
                         </React.Fragment>
                       }
                       {
-                        role === 'ADMIN' &&
+                        role === 'Administrator' &&
                         <NavDropdown title="Admin" id="collasible-nav-dropdown2" >
 
                             <NavDropdown.Item as={Link} to={ROUTE_PATH.MESSAGE_MANAGEMENT}  className="text-dark">Message Management</NavDropdown.Item>
@@ -123,7 +127,7 @@ const Header: React.FC = () => {
                           &nbsp;
                       </Form>
                       {
-                        role === 'VISITOR' &&
+                        role === 'Visitor' &&
                         <Nav.Link as={Link} to={ROUTE_PATH.LOGIN} className="py-1 px-4">
                             <Button className="px-4 py-1">Login</Button></Nav.Link>
                       }

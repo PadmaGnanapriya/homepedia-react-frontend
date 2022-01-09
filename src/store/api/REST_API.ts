@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const HOST = "http://localhost:3001/";
-const idToken = ''
+const idToken = sessionStorage.getItem('userRole');
 
 
 export const API = {
