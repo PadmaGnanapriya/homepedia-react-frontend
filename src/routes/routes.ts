@@ -15,7 +15,7 @@ const NotificationManagement = React.lazy(() => import('../views/NotificationMan
 const TermsAndConditions = React.lazy(() => import('../views/TermsAndConditions'));
 const Faq = React.lazy(() => import('../views/Faq'));
 const ForgotPassword = React.lazy(() => import('../views/ForgotPassword'));
-const ResetPassword = React.lazy(() => import('../views/ResetPassword'));
+// const ResetPassword = React.lazy(() => import('../views/ResetPassword'));
 const Profile = React.lazy(() => import('../views/Profile'));
 const ServiceSupplierOverView = React.lazy(() => import('../views/ServiceSupplierOverview'));
 const IncomeManagement = React.lazy(() => import('../views/IncomeManagement'));
@@ -37,7 +37,7 @@ export const routes = [
   { path: ROUTE_PATH.TERMS_AND_CONDITIONS, exact: false, component: TermsAndConditions },
   { path: ROUTE_PATH.FAQ, exact: false, component: Faq },
   { path: ROUTE_PATH.FORGOT_PASSWORD, exact: false, component: ForgotPassword },
-  { path: ROUTE_PATH.RESET_PASSWORD, exact: false, component: ResetPassword },
+  // { path: ROUTE_PATH.RESET_PASSWORD, exact: false, component: ResetPassword },
   { path: ROUTE_PATH.PROFILE, exact: false, component: Profile },
   { path: ROUTE_PATH.SERVICE_SUPPLIER_OVERVIEW + "/:id", exact: false, component: ServiceSupplierOverView },
   { path: ROUTE_PATH.FAQ_MANAGEMENT, exact: false, component: FaqManagement },

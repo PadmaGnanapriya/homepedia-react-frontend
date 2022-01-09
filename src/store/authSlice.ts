@@ -46,6 +46,10 @@ export const signOut = createAsyncThunk('auth/SignOut', async () => {
   return await auth.signOut();
   })
 
+export const forgotPassword = createAsyncThunk('auth/ForgotPassword', async (email: string)=> {
+  return await auth.sendPasswordResetEmail(email);
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -77,6 +81,17 @@ const authSlice = createSlice({
       .addCase(signOut.fulfilled, (state: stateType, action) => {
         state.status = 'succeeded'
         state.role = 'Visitor';
+      })
+      .addCase(forgotPassword.pending, (state: stateType, action) => {
+        state.status = 'loading'
+      })
+      .addCase(forgotPassword.fulfilled, (state: stateType, action) => {
+        state.status = 'succeeded'
+        // state.role = action.payload;
+      })
+      .addCase(forgotPassword.rejected, (state: stateType, action) => {
+        state.status = 'failed'
+        state.error = action.error.message || ''
       })
   },
 })

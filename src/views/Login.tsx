@@ -7,7 +7,7 @@ import googleLogo from "../assets/images/googleLogo.webp";
 import {Link} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 import {useDispatch, useSelector} from "react-redux";
-import {loggedUser, signWithEmailPassword, signWithGoogle} from "../store/authSlice";
+import {signWithEmailPassword, signWithGoogle} from "../store/authSlice";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
