@@ -4,6 +4,7 @@ import userReviewsReducer from "./userReviewsSlice";
 import paymentReducer from "./paymentSlice";
 import serviceCategoryReducer from "./ServiceCategorySlice";
 import serviceSupplierReducer from "./ServiceSupplierSlice";
+import authReducer from "./authSlice";
 
 export default configureStore({
     reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
         payments: paymentReducer,
         serviceCategories: serviceCategoryReducer,
         serviceSuppliers: serviceSupplierReducer,
+        auth: authReducer
     },
 })

@@ -3,6 +3,7 @@ import axios from 'axios';
 const HOST = "http://localhost:3001/";
 const idToken = ''
 
+
 export const API = {
   GET: async (endpoint: string) => {
     return await axios.get(`${HOST}${endpoint}`, {headers: {'Authorization': `Bearer ${idToken}`}},)
