@@ -9,7 +9,7 @@ import {useLocation} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 import Loading from "../components/Loading";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -97,7 +97,6 @@ const Home: React.FC = () => {
                   }
               </Row>
           </Container>
-          <ToastContainer position="top-right" autoClose={4000}/>
       </Container>
     );
 }

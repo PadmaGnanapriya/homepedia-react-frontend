@@ -20,7 +20,7 @@ export const fetchMessages = createAsyncThunk('messages/fetchMessages', async ()
 
 export const addNewMessage = createAsyncThunk(
   'messages/addNewMessage',
-  async (initialMessage) => {
+  async (initialMessage:any) => {
     const response = await API.POST('messages', initialMessage)
     return response.data
   }
@@ -51,7 +51,15 @@ const messagesSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message || ''
       })
+      .addCase(addNewMessage.pending, (state: stateType, action) => {
+        state.status = 'sending'
+      })
+      .addCase(addNewMessage.rejected, (state: stateType, action) => {
+        state.status = 'failed'
+        state.error = action.error.message || ''
+      })
       .addCase(addNewMessage.fulfilled, (state: stateType, action) => {
+        state.status = 'succeeded'
         state.dataSet.push(action.payload)
       })
       .addCase(deleteMessage.fulfilled, (state: stateType, action) => {
@@ -62,3 +70,4 @@ const messagesSlice = createSlice({
 
 export default messagesSlice.reducer
 export const selectAllMessages = (state: any) => state.messages.dataSet;
+
