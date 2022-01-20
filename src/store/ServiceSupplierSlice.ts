@@ -44,22 +44,22 @@ export const fetchVipServiceSuppliers = createAsyncThunk(
   })
 
 export const addNewServiceSupplier = createAsyncThunk(
-  'serviceSuppliers/addNewServiceSupplier', async (initialServiceSupplier) => {
-    const response = await API.POST('user-reviews', initialServiceSupplier)
+  'serviceSuppliers/addNewServiceSupplier', async (initialServiceSupplier:any) => {
+    const response = await API.POST('service-suppliers', initialServiceSupplier)
     return response.data
   }
 )
 
 export const deleteServiceSupplier = createAsyncThunk(
   'serviceSuppliers/deleteServiceSupplier', async (id: number) => {
-    const response = await API.DELETE('user-reviews/' + id)
+    const response = await API.DELETE('service-suppliers/' + id)
     return response.data
   }
 )
 
 export const approveServiceSupplier = createAsyncThunk(
   'serviceSuppliers/approveServiceSupplier', async (id: number) => {
-    const response = await API.PATCH('user-reviews/' + id, {})
+    const response = await API.PATCH('service-suppliers/' + id, {})
     return response.data
   }
 )

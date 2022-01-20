@@ -7,6 +7,7 @@ import Footer from "./layout/Footer";
 import {Route, Routes} from "react-router";
 import {auth} from "./utils/firebase";
 import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const routeList = routes.map((route: any, index) => {

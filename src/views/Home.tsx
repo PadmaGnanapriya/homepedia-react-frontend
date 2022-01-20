@@ -10,8 +10,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 import Loading from "../components/Loading";
 import {toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const Home: React.FC = () => {
     const myRef = useRef(null);
