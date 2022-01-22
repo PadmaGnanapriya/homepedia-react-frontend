@@ -226,7 +226,8 @@ const Register: React.FC = () => {
             <Form.Group className="mb-3" id="formGridCheckbox">
               <input type="checkbox" onChange={() => setIsChecked(!isChecked)}/>&nbsp;
               <small>I have agreed to&nbsp;
-                <a target="_blank" rel="noreferrer" href={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms and Conditions</a></small>
+                <a target="_blank" rel="noreferrer" href={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms and
+                  Conditions</a></small>
             </Form.Group>
             <Col className="text-center" sm={12}>
               <Button type="submit" className="px-5 my-3" disabled={!isChecked || isLoading}>Register</Button>

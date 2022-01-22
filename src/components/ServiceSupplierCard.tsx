@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Col, Container, Image, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 // @ts-ignore
 import ReactStars from "react-rating-stars-component";
@@ -22,10 +22,15 @@ type ServiceSupplierProps = {
 
 const ServiceSupplierCard: React.FC<ServiceSupplierProps> = (props) => {
   const {supplier, serviceCategories} = props;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(ROUTE_PATH.SERVICE_SUPPLIER_OVERVIEW + "/" + supplier._id);
+  }
 
   return (
     <Col sm={12} md={6} className="p-2 service-supplier-card">
-      <Card as={Link} to={ROUTE_PATH.SERVICE_SUPPLIER_OVERVIEW + "/" + supplier._id} className="card-div-fluid px-1 py-3">
+      <Card onClick={handleClick} className="card-div-fluid px-1 py-3">
         <Container>
           <Row>
             <Col sm={3}>

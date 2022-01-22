@@ -10,108 +10,94 @@ import {fetchServiceCategories, selectAllServiceCategories} from "../store/Servi
 import Loading from "../components/Loading";
 import {toast} from "react-toastify";
 import {
-    fetchAllApprovedServiceSuppliers,
-    selectAllServiceSuppliers
+  fetchAllApprovedServiceSuppliers,
+  selectAllServiceSuppliers
 } from "../store/ServiceSupplierSlice";
 
 const Home: React.FC = () => {
-    const myRef = useRef(null);
-    const location = useLocation();
-    const dispatch = useDispatch()
+  const myRef = useRef(null);
+  const location = useLocation();
+  const dispatch = useDispatch()
 
-    const serviceCategories = useSelector(selectAllServiceCategories)
-    const serviceSupplierStatus = useSelector((state: any) => state.serviceSuppliers.status)
-    const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
-    const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
-    const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
+  const serviceCategories = useSelector(selectAllServiceCategories)
+  const serviceSupplierStatus = useSelector((state: any) => state.serviceSuppliers.status)
+  const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
+  const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
+  const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
 
-    const suppliers = useSelector(selectAllServiceSuppliers)
+  const suppliers = useSelector(selectAllServiceSuppliers)
 
-    useEffect(() => {
-        if (serviceCategoriesStatus === 'idle') {
-            dispatch(fetchServiceCategories());
-        }
-        if(serviceCategoriesError){
-            toast.error(serviceCategoriesError)
-        }
-        if (serviceSupplierStatus === 'idle' || serviceCategories.length === 0) {
-            dispatch(fetchAllApprovedServiceSuppliers());
-        }
-        if(serviceSupplierError){
-            toast.error(serviceSupplierError)
-        }
-    }, [serviceCategoriesStatus, dispatch])
+  useEffect(() => {
+    if (serviceCategoriesStatus === 'idle') {
+      dispatch(fetchServiceCategories());
+    }
+    if (serviceCategoriesError) {
+      toast.error(serviceCategoriesError)
+    }
+    if (serviceSupplierStatus === 'idle' || serviceCategories.length === 0) {
+      dispatch(fetchAllApprovedServiceSuppliers());
+    }
+    if (serviceSupplierError) {
+      toast.error(serviceSupplierError)
+    }
+  }, [serviceCategoriesStatus, dispatch])
 
-    useEffect(() => {
-        if (location.hash !== '') {
-            // @ts-ignore
-            myRef.current.scrollIntoView();
-        }
-    })
+  useEffect(() => {
+    if (location.hash !== '') {
+      // @ts-ignore
+      myRef.current.scrollIntoView();
+    }
+  })
 
-    return (
-      <Container fluid={true} className="p-0 blue-bg-color">
-          <img src={bannerImage} className="img-fluid w-100"/>
-          <Container fluid={true} className="py-4 px-3 px-md-5" >
-              <h3 className="ps-4 text-light">Premium Members</h3>
-              <Carousel>
-                  <Carousel.Item>
-                      <ServiceSupplierBanner/>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                      <ServiceSupplierBanner/>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                      <ServiceSupplierBanner/>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                      <ServiceSupplierBanner/>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                      <ServiceSupplierBanner/>
-                  </Carousel.Item>
-              </Carousel>
+  return (
+    <Container fluid={true} className="p-0 blue-bg-color">
+      <img src={bannerImage} className="img-fluid w-100"/>
+      <Container fluid={true} className="py-4 px-3 px-md-5">
+        <h3 className="ps-4 text-light">Premium Members</h3>
+        <Carousel>
+          <Carousel.Item>
+            <ServiceSupplierBanner/>
+          </Carousel.Item>
+          <Carousel.Item>
+            <ServiceSupplierBanner/>
+          </Carousel.Item>
+          <Carousel.Item>
+            <ServiceSupplierBanner/>
+          </Carousel.Item>
+          <Carousel.Item>
+            <ServiceSupplierBanner/>
+          </Carousel.Item>
+          <Carousel.Item>
+            <ServiceSupplierBanner/>
+          </Carousel.Item>
+        </Carousel>
 
-              <Row className="pt-5">
-                  <Col sm={4} className="text-center text-light p-3"><h3> Filter By</h3></Col>
-                  <Col sm={4} className="p-3">
-                      <DropdownButton id="dropdown-basic-button" title="  City  ">
-                          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                      </DropdownButton>
-                  </Col>
-                  <Col sm={4} className="p-3">
-                      <DropdownButton id="dropdown-basic-button" title="  Service  ">
-                          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                      </DropdownButton>
-                  </Col>
-                  {
-                      suppliers.slice(0, 10).map((supplier:any, index:number) =>
-                        <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
-                  }
+        <Row className="pt-5">
+          <Col sm={12} className="text-light p-3"><h3> Popular service suppliers</h3></Col>
+          {
+            suppliers.slice(0, 10).map((supplier: any, index: number) =>
+              <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
+          }
 
-                  <br/>
-                  <br/>
-                  <br/>
-                  <hr/>
-                  <br/>
-                  <h3 id="categories" ref={myRef} className="text-light">Categories</h3>
-                  {
-                      serviceCategoriesStatus === 'loading' &&
-                    <Loading/>
-                  }
-                  {
-                      serviceCategories.map((serviceCategory:any, index:number) =>
-                        <CategoryCard key={index +'category'} sm={6} md={6} lg={4} label={serviceCategory.name}
-                                      icon={serviceCategory.icon}/>)
-                  }
-              </Row>
-          </Container>
+          <br/>
+          <br/>
+          <br/>
+          <hr/>
+          <br/>
+          <h3 id="categories" ref={myRef} className="text-light">Categories</h3>
+          {
+            serviceCategoriesStatus === 'loading' &&
+              <Loading/>
+          }
+          {
+            serviceCategories.map((serviceCategory: any, index: number) =>
+              <CategoryCard key={index + 'category'} sm={6} md={6} lg={4} label={serviceCategory.name}
+                            icon={serviceCategory.icon} index={index}/>)
+          }
+        </Row>
       </Container>
-    );
+    </Container>
+  );
 }
 
 export default Home;

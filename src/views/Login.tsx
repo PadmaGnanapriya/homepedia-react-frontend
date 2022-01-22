@@ -11,9 +11,9 @@ import {signWithEmailPassword, signWithGoogle} from "../store/authSlice";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const {loggedUser, status} = useSelector((state:any) => state.auth);
+  const {loggedUser, status} = useSelector((state: any) => state.auth);
 
-  const handleSignIn = (e:any) => {
+  const handleSignIn = (e: any) => {
     e.preventDefault();
     dispatch(signWithEmailPassword(e.target));
   }
@@ -22,9 +22,9 @@ const Login: React.FC = () => {
     dispatch(signWithGoogle())
   }
 
-  useEffect(()=> {
-      sessionStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-      console.log(loggedUser)
+  useEffect(() => {
+    sessionStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+    console.log(loggedUser)
   }, [loggedUser])
 
   return (
