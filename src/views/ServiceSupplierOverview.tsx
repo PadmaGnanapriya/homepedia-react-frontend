@@ -54,13 +54,13 @@ const ServiceSupplierOverview: React.FC = () => {
           <Container>
               <Row className="py-4">
                   {
-                      dataSet.map(data => <CategoryCard sm={12} md={6} lg={6} label={data.label} icon={data.icon}
+                      dataSet.map(data => <CategoryCard key={data.icon} sm={12} md={6} lg={6} label={data.label} icon={data.icon}
                                                         description={data.description}/>)
                   }
                   <Col sm={12} md={6} className="pt-5">
                       <h3 className="pb-4">User Reviews</h3>
                       {
-                          reviewList.map(review => <UserReviewCard id={review.id} rating={review.rating} comment={review.comment}
+                          reviewList.map(review => <UserReviewCard key={review.id} id={review.id} rating={review.rating} comment={review.comment}
                                                                    email={review.email} commentTime={review.commentTime}/>)
                       }
                   </Col>

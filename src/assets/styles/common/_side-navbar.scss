@@ -1,0 +1,12 @@
+.side-nav-container {
+  background-color: var(--very-light-violet);
+  font-weight: bold;
+
+  .side-link:hover {
+    background-color: var(--light-violet);
+  }
+
+  .side-link.active {
+    background-color: var(--light-violet);
+  }
+}

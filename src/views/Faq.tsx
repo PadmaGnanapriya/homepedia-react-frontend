@@ -31,8 +31,8 @@ const Faq: React.FC = () => {
         <h1 className="h4 text-center">FAQ</h1>
         <Accordion>
           {
-            data.map((faq: any) =>
-              <Accordion.Item eventKey={faq._id}>
+            data.map((faq: any, index: number) =>
+              <Accordion.Item key={index} eventKey={faq._id}>
                 <Accordion.Header>{faq.question}</Accordion.Header>
                 <Accordion.Body>{faq.answer} </Accordion.Body>
               </Accordion.Item>

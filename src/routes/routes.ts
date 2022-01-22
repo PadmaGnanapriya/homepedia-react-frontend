@@ -27,6 +27,7 @@ export const routes = [
   { path: ROUTE_PATH.REGISTER, exact: true, component: Register },
   { path: ROUTE_PATH.ABOUT, exact: true, component: About },
   { path: ROUTE_PATH.CONTACT, exact: true, component: Contact },
+  { path: ROUTE_PATH.FIND_SERVICE + '/:category', exact: false, component: FindService },
   { path: ROUTE_PATH.FIND_SERVICE, exact: false, component: FindService },
   { path: ROUTE_PATH.DASHBOARD, exact: false, component: Dashboard },
   { path: ROUTE_PATH.MESSAGE_MANAGEMENT, exact: false, component: MessageManagement },

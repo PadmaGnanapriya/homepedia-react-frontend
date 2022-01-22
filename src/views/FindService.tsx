@@ -1,33 +1,67 @@
 import React, {useEffect, useState} from "react";
 import {Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import ServiceSupplierCard from "../components/ServiceSupplierCard";
-import {cities, suppliers} from "../store/dummyData";
+import {cities} from "../store/dummyData";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
+import {fetchAllApprovedServiceSuppliers, selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
+import {toast} from "react-toastify";
+import {useLocation, useNavigate} from "react-router-dom";
+import {ROUTE_PATH} from "../constants/RoutePaths";
 
 const FindService: React.FC = () => {
-    const [activeLinkIndex, setActiveLinkIndex] = useState(0);
+    const [activeLinkIndex, setActiveLinkIndex] = useState(4);
   const dispatch = useDispatch()
 
   const serviceCategories = useSelector(selectAllServiceCategories)
   const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
   const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
+  const suppliers = useSelector(selectAllServiceSuppliers)
+  const serviceSupplierStatus = useSelector((state: any) => state.serviceSuppliers.status)
+  const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
+  const [filteredSuppliers, setFilteredSuppliers] = useState([])
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (serviceCategoriesStatus === 'idle') {
       dispatch(fetchServiceCategories());
     }
+    if(serviceCategoriesError){
+      toast.error(serviceCategoriesError)
+    }
+    if (serviceSupplierStatus === 'idle'|| serviceCategories.length === 0) {
+      dispatch(fetchAllApprovedServiceSuppliers());
+    }
+    if(serviceSupplierError){
+      toast.error(serviceSupplierError)
+    }
   }, [serviceCategoriesStatus, dispatch])
 
-    const handleOnClickSideNavLink = (index: number) => {
+  useEffect(() => {
+    // if(location.pathname.split('/').length>=3 && activeLinkIndex === 0) {
+    //   setActiveLinkIndex(serviceCategories.filter((category:any, index:number) => category.name ===location.pathname.split('/')[2])[0])
+    // }
+
+      setFilteredSuppliers(suppliers.filter((supplier:any) =>
+      supplier.serviceTypes.includes(serviceCategories[activeLinkIndex]?.name)))
+  }, [suppliers, activeLinkIndex, location])
+
+
+  const handleOnClickSideNavLink = (index: number) => {
         setActiveLinkIndex(index)
-    }
+    navigate(ROUTE_PATH.FIND_SERVICE + "/" + serviceCategories[index]?.name)
+
+  }
     return (
       <div className="d-flex">
           <div style={{width: '200px'}} className="py-3 side-nav-container">
               <DropdownButton id="dropdown-basic-button" title="  City  ">
                   {
-                      cities.map(element =>  <Dropdown.Item href="#/action-1">{element}</Dropdown.Item>)
+                      cities.map((element, index) =>
+                        <Dropdown.Item key={index} href="#/action-1">{element}</Dropdown.Item>)
                   }
               </DropdownButton>
               {
@@ -42,13 +76,13 @@ const FindService: React.FC = () => {
               background: 'radial-gradient(circle, rgba(26,8,69,1) 0%, rgba(43,19,98,1) 35%, rgba(50,121,189,1) 100%)'
           }}>
               <Row>
-                  {
-                      suppliers.map(supplier => <ServiceSupplierCard supplier={supplier}/>)
-                  }
+                {
+                  filteredSuppliers.length > 0 &&
+                  filteredSuppliers.slice(0, 10).map((supplier:any, index:number) =>
+                    <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
+                }
               </Row>
           </Container>
-
-
       </div>
     )
 }

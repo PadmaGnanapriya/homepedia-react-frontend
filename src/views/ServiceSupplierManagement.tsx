@@ -1,11 +1,11 @@
 import React, {forwardRef, useEffect} from "react";
 import CustomTable from "../components/CustomTable";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAllServiceSuppliers, selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
+import {fetchAllServiceSuppliers, selectAllServiceSuppliersForAdmin} from "../store/ServiceSupplierSlice";
 
 const ServiceSupplierManagement: React.FC = () => {
     const dispatch = useDispatch()
-    const data = useSelector(selectAllServiceSuppliers)
+    const data = useSelector(selectAllServiceSuppliersForAdmin)
     const MessageStatus = useSelector((state: any) => state.messages.status)
 
     useEffect(() => {

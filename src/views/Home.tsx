@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {Carousel, Col, Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import ServiceSupplierCard from "../components/ServiceSupplierCard";
-import { suppliers} from "../store/dummyData";
 import bannerImage from "../assets/images/background.webp"
 import ServiceSupplierBanner from "../components/ServiceSupplierBanner";
 import CategoryCard from "../components/CategoryCard";
@@ -10,6 +9,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 import Loading from "../components/Loading";
 import {toast} from "react-toastify";
+import {
+    fetchAllApprovedServiceSuppliers,
+    selectAllServiceSuppliers
+} from "../store/ServiceSupplierSlice";
 
 const Home: React.FC = () => {
     const myRef = useRef(null);
@@ -17,8 +20,12 @@ const Home: React.FC = () => {
     const dispatch = useDispatch()
 
     const serviceCategories = useSelector(selectAllServiceCategories)
+    const serviceSupplierStatus = useSelector((state: any) => state.serviceSuppliers.status)
     const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
+    const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
     const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
+
+    const suppliers = useSelector(selectAllServiceSuppliers)
 
     useEffect(() => {
         if (serviceCategoriesStatus === 'idle') {
@@ -26,6 +33,12 @@ const Home: React.FC = () => {
         }
         if(serviceCategoriesError){
             toast.error(serviceCategoriesError)
+        }
+        if (serviceSupplierStatus === 'idle' || serviceCategories.length === 0) {
+            dispatch(fetchAllApprovedServiceSuppliers());
+        }
+        if(serviceSupplierError){
+            toast.error(serviceSupplierError)
         }
     }, [serviceCategoriesStatus, dispatch])
 
@@ -76,7 +89,8 @@ const Home: React.FC = () => {
                       </DropdownButton>
                   </Col>
                   {
-                      suppliers.map(supplier => <ServiceSupplierCard supplier={supplier}/>)
+                      suppliers.slice(0, 10).map((supplier:any, index:number) =>
+                        <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
                   }
 
                   <br/>
@@ -90,8 +104,9 @@ const Home: React.FC = () => {
                     <Loading/>
                   }
                   {
-                      serviceCategories.map((serviceCategory:any) =>
-                        <CategoryCard sm={6} md={6} lg={4} label={serviceCategory.name} icon={serviceCategory.icon}/>)
+                      serviceCategories.map((serviceCategory:any, index:number) =>
+                        <CategoryCard key={index +'category'} sm={6} md={6} lg={4} label={serviceCategory.name}
+                                      icon={serviceCategory.icon}/>)
                   }
               </Row>
           </Container>
