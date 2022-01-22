@@ -9,7 +9,6 @@ import {fetchFAQs, selectAllFAQs} from "../store/faqSlice";
 import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 
-// TODO: Add a map and loop data.
 const Faq: React.FC = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectAllFAQs);

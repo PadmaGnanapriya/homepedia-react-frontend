@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Col, Container, Row, Table} from "react-bootstrap";
-
+import {cardData, chartData, pieData} from "../store/dummyData";
 import {
     ArcElement,
     BarElement,
@@ -46,38 +46,39 @@ export const options = {
 };
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday'];
+
 export const dataDailyVisitCount = {
     labels: weekDays,
     datasets: [
         {
             label: 'Last Week',
-            data: weekDays.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data: chartData.totalVisitorCountForWeek.last,
             borderColor: 'rgb(215,38,175)',
             backgroundColor: 'rgba(209, 31, 169, 0.5)',
         },
         {
             label: 'This Week',
-            data: weekDays.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data: chartData.totalVisitorCountForWeek.current,
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
     ],
 };
 
-
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 export const dataMonthlyVisitCount = {
     labels: months,
     datasets: [
         {
             label: 'Last Week',
-            data: months.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data: chartData.totalVisitorCountForMonth.last,
             borderColor: 'rgb(215,38,175)',
             backgroundColor: 'rgba(215,38,175, 0.5)',
         },
         {
             label: 'This Week',
-            data: months.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data: chartData.totalVisitorCountForMonth.current,
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
@@ -85,22 +86,22 @@ export const dataMonthlyVisitCount = {
 };
 
 export const dataMonthlyIncomeDistribution = {
-    labels: cities,
+    labels: months,
     datasets: [
         {
             label: 'Last Month',
-            data: cities.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data: chartData.monthlyIncomeForYear.last,
             backgroundColor: 'rgba(215,38,175, 0.5)',
         },
         {
             label: 'This Month',
-            data: cities.map(() => faker.datatype.number({min: 0, max: 1000})),
+            data:chartData.monthlyIncomeForYear.current,
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
     ],
 };
 
-
+//todo:
 export const dataProvinceViceSupplierDeviation = {
     labels: ['Western', 'Central', 'Southern', 'Uva', 'Sabaragamuwa', 'North Western', 'North Central', 'Northern'],
     datasets: [
@@ -128,13 +129,12 @@ export const dataProvinceViceSupplierDeviation = {
     ],
 };
 
-
-export const dataDistrictsViceSupplierDeviation = {
-    labels: cities,
+export const visitorDeviation = {
+    labels: pieData.visitorDistribution.map((recode)=> recode.name),
     datasets: [
         {
             label: '# of Votes',
-            data: cities.map(() => faker.datatype.number({min: 1, max: 100})),
+            data:  pieData.visitorDistribution.map((recode)=> recode.count),
             backgroundColor: [
                 'rgba(215,38,175, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -165,29 +165,29 @@ const Dashboard: React.FC = () => {
               <Col sm={6} md={3}>
                   <Card className="card-div-fluid py-2 px-4">
                       <h4>Income</h4>
-                      <h5>Last Month: Rs. 24000</h5>
-                      <h5>This Month: Rs. 16000</h5>
+                      <h5>Last Year: Rs. {cardData.totalIncome.last}</h5>
+                      <h5>This Year: Rs. {cardData.totalIncome.current}</h5>
                   </Card>
               </Col>
               <Col sm={6} md={3}>
                   <Card className="card-div-fluid py-2 px-4">
-                      <h4>Supplier</h4>
-                      <h5>Last Month: 120</h5>
-                      <h5>This Month: 88</h5>
+                      <h4>New Sup. Registration</h4>
+                      <h5>Last Month: {cardData.newServiceSupplierRegistration.last}</h5>
+                      <h5>This Month: {cardData.newServiceSupplierRegistration.current}</h5>
                   </Card>
               </Col>
               <Col sm={6} md={3}>
                   <Card className="card-div-fluid py-2 px-4">
-                      <h4>User Request</h4>
-                      <h5>Pending: 2</h5>
-                      <h5>Rejected: 12</h5>
+                      <h4>Total Sup. Request</h4>
+                      <h5>Pending: {cardData.totalServiceSuppliersRequest.pending}</h5>
+                      <h5>Rejected: {cardData.totalServiceSuppliersRequest.rejected}</h5>
                   </Card>
               </Col>
               <Col sm={6} md={3}>
                   <Card className="card-div-fluid py-2 px-4">
                       <h4>Complaints</h4>
-                      <h5>Unread: 4</h5>
-                      <h5>Read: 54</h5>
+                      <h5>Unread: {cardData.totalMessages.unread}</h5>
+                      <h5>Read: {cardData.totalMessages.read}</h5>
                   </Card>
               </Col>
 
@@ -260,8 +260,8 @@ const Dashboard: React.FC = () => {
               </Col>
 
               <Col className="py-4 py-md-5" sm={6}>
-                  <h2>Districts Vice Supplier Deviation</h2>
-                  <Pie data={dataDistrictsViceSupplierDeviation}/>
+                  <h2 className="text-center">Total Visitor Deviation</h2>
+                  <Pie data={visitorDeviation}/>
               </Col>
 
           </Row>

@@ -7,8 +7,6 @@ const UserReviewManagement: React.FC = () => {
   const dispatch = useDispatch()
   const data = useSelector(selectAllUserReviews)
   const UserReviewStatus = useSelector((state: any) => state.userReviews.status)
-  const error = useSelector((state: any) => state.userReviews.error)
-  console.log(useSelector((state: any) => state.userReviews));
 
   useEffect(() => {
     if (UserReviewStatus === 'idle') {

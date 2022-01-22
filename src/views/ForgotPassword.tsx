@@ -10,7 +10,6 @@ import {forgotPassword} from "../store/authSlice";
 
 const ForgotPassword: React.FC = () => {
   const [isEmailSubmit, setIsEmailSubmit] = useState(false);
-  const [isSubmitSixDigitCode, setIsSubmitSixDigitCode] = useState(false);
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +48,7 @@ const ForgotPassword: React.FC = () => {
                 </div>
             </Form>
         }
-        {isEmailSubmit && !isSubmitSixDigitCode &&
+        {isEmailSubmit &&
             <Form onSubmit={e => handleSubmit(e)}>
                 <label className="d-block text-center mb-3">
                     We have send password reset link into your email. Click the link and reset your password.</label>

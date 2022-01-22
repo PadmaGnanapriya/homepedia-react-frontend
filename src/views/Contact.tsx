@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import image from "../assets/images/page-contact.webp";
 import BackgroundImage from "../components/BackGroundImg";
 import {Button, Card, Form, Image} from "react-bootstrap";

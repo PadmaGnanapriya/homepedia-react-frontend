@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
 
               <Col xs={12} sm={6} md={4} className="p-2 p-md-3">
                   <h4>Contact Info</h4>
-                  <a target="_blank" href="https://www.google.com/maps/place/University+of+Kelaniya+-+Sri+Lanka/@6.9744491,79.9138713,17z/data=!3m1!4b1!4m5!3m4!1s0x3ae258033380c747:0x12c707892cabde33!8m2!3d6.9744491!4d79.91606">
+                  <a target="_blank" rel="noreferrer" href="https://www.google.com/maps/place/University+of+Kelaniya+-+Sri+Lanka/@6.9744491,79.9138713,17z/data=!3m1!4b1!4m5!3m4!1s0x3ae258033380c747:0x12c707892cabde33!8m2!3d6.9744491!4d79.91606">
                       <span className="icon-location_on"/>  University Kandy Road Kelaniya, 11600</a><br/>
                   <a href="tel:+94766328189"> <span className="icon-phone"/>  +94 766 328 189</a><br/>
                   <a href="mailto:homepedia@gmail.com"><span className="icon-email"/>  homepedia@gmail.com</a>

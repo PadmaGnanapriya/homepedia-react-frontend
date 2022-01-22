@@ -9,7 +9,6 @@ const IncomeManagement: React.FC = () => {
     const dispatch = useDispatch()
     const data = useSelector(selectAllPayments)
     const paymentsStatus = useSelector((state: any) => state.payments.status)
-    const error = useSelector((state: any) => state.payments.error)
 
     useEffect(() => {
         if (paymentsStatus === 'idle') {

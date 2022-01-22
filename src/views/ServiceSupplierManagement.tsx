@@ -1,37 +1,18 @@
 import React, {forwardRef, useEffect} from "react";
 import CustomTable from "../components/CustomTable";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchMessages, selectAllMessages} from "../store/messagesSlice";
 import {fetchAllServiceSuppliers, selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
 
 const ServiceSupplierManagement: React.FC = () => {
     const dispatch = useDispatch()
     const data = useSelector(selectAllServiceSuppliers)
     const MessageStatus = useSelector((state: any) => state.messages.status)
-    const error = useSelector((state: any) => state.messages.error)
 
     useEffect(() => {
         if (MessageStatus === 'idle') {
             dispatch(fetchAllServiceSuppliers());
         }
     }, [MessageStatus, dispatch])
-
-    const data2 = [
-        {
-            username: "Padma Gnanapriya",
-            nic: '9705523232V',
-            gender: 'Male',
-            email: 'padmaisuru@gmail.com',
-            contactNo: '0766328189',
-            serviceArea: 'Galle',
-            serviceTypes: ["Electrical", "Masons"],
-            workingTime: '8.30AM - 5.30PM',
-            certification: 'none',
-            workingExperience: '5 years',
-            selectedPackage: '12 months'
-        }
-
-    ];
 
     const columns = [
         {title: 'Full Name', field: 'fullName'},
@@ -40,7 +21,6 @@ const ServiceSupplierManagement: React.FC = () => {
         {title: 'Contact No', field: 'contactNumber'},
         {title: 'Service Area', field: 'workingArea'},
         {title: 'selectedPackage', field: 'selectedPlan'},
-
     ];
 
     // TODO : Create function for onClick event. remove dummy console log

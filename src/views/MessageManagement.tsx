@@ -7,7 +7,6 @@ const MessageManagement: React.FC = () => {
     const dispatch = useDispatch()
     const data = useSelector(selectAllMessages)
     const MessageStatus = useSelector((state: any) => state.messages.status)
-    const error = useSelector((state: any) => state.messages.error)
 
     useEffect(() => {
         if (MessageStatus === 'idle') {

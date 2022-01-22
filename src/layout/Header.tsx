@@ -3,8 +3,8 @@ import {Button, Form, FormControl, Image, Nav, Navbar, NavDropdown, OverlayTrigg
 import {Link} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 import logo from "../assets/images/logo2.webp";
-import {useDispatch, useSelector} from "react-redux";
-import {loggedRole, signOut} from "../store/authSlice";
+import {useDispatch} from "react-redux";
+import {signOut} from "../store/authSlice";
 
 const Header: React.FC = () => {
     const dispatch = useDispatch();

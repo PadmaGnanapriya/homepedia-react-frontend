@@ -43,7 +43,7 @@ const About: React.FC = () => {
             </Col>
 
             <Col sm={12} md={6}>
-              <iframe
+              <iframe title="location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2952617587734!2d79.91387131477319!3d6.974449094961461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae258033380c747%3A0x12c707892cabde33!2sUniversity%20of%20Kelaniya%20-%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1637678197023!5m2!1sen!2slk"
                 width="600" height="450"/>
             </Col>

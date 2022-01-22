@@ -4,14 +4,14 @@ import userPlaceHolder from "../assets/images/userPlaceHolder.webp";
 // @ts-ignore
 import ReactStars from "react-rating-stars-component";
 
-type UserReviewCard = {
+type UserReviewCardType = {
   id: number;
   rating: number;
   comment: string;
   email: string;
   commentTime: string;
 }
-const UserReviewCard: React.FC<UserReviewCard> = (props) => {
+const UserReviewCard: React.FC<UserReviewCardType> = (props) => {
   return (
     <Container fluid>
       <Row>
