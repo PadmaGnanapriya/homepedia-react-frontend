@@ -1,31 +1,35 @@
 import React, {useEffect, useState} from "react";
 import {Container, Dropdown, DropdownButton, Row} from "react-bootstrap";
 import ServiceSupplierCard from "../components/ServiceSupplierCard";
-import {cities} from "../store/dummyData";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 import {fetchAllApprovedServiceSuppliers, selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
 import {toast} from "react-toastify";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
+import {fetchCities, selectAllCities} from "../store/citiesSlice";
 
 const FindService: React.FC = () => {
   const [activeLinkIndex, setActiveLinkIndex] = useState(sessionStorage.getItem('activeIndex') || 0);
   const dispatch = useDispatch()
-
+  const cities = useSelector(selectAllCities);
   const serviceCategories = useSelector(selectAllServiceCategories)
   const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
   const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
   const suppliers = useSelector(selectAllServiceSuppliers)
   const serviceSupplierStatus = useSelector((state: any) => state.serviceSuppliers.status)
   const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
+  const cityStatus = useSelector((state: any) => state.cities.status)
   const [filteredSuppliers, setFilteredSuppliers] = useState([])
+  const [selectedCity, setSelectedCity] = useState('');
 
   const location = useLocation();
   const navigate = useNavigate();
 
-
   useEffect(() => {
+    if (cityStatus === 'idle') {
+      dispatch(fetchCities());
+    }
     if (serviceCategoriesStatus === 'idle') {
       dispatch(fetchServiceCategories());
     }
@@ -42,9 +46,10 @@ const FindService: React.FC = () => {
 
   useEffect(() => {
     setFilteredSuppliers(suppliers.filter((supplier: any) =>
-      supplier.serviceTypes.includes(serviceCategories[activeLinkIndex]?.name)
+      supplier.serviceTypes.includes(serviceCategories[activeLinkIndex]?.name) &&
+      ( supplier.workingArea === selectedCity || selectedCity === '')
     ))
-  }, [suppliers, activeLinkIndex, location])
+  }, [suppliers, activeLinkIndex, location, selectedCity])
 
 
   const handleOnClickSideNavLink = (index: number) => {
@@ -55,10 +60,11 @@ const FindService: React.FC = () => {
   return (
     <div className="d-flex">
       <div style={{width: '200px'}} className="py-3 side-nav-container">
-        <DropdownButton id="dropdown-basic-button" title="  City  ">
+        <DropdownButton id="dropdown-basic-button" title={"City: "+ selectedCity}>
           {
-            cities.map((element, index) =>
-              <Dropdown.Item key={index} href="#/action-1">{element}</Dropdown.Item>)
+            cities.map((element: any, index: number) =>
+              <Dropdown.Item key={index} value={element.name} onClick={() => setSelectedCity(element.name)}>
+                {element.name}</Dropdown.Item>)
           }
         </DropdownButton>
         {

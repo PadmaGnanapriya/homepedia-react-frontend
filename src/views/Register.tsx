@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BackgroundImage from "../components/BackGroundImg";
 import image from "../assets/images/background.webp";
 import {Button, Card, Col, Form, Image, Row} from "react-bootstrap";
@@ -10,10 +10,16 @@ import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {addNewServiceSupplier} from "../store/ServiceSupplierSlice";
 import {loggedRole} from "../store/authSlice";
+import {fetchCities, selectAllCities} from "../store/citiesSlice";
+import {fetchServiceCategories, selectAllServiceCategories} from "../store/ServiceCategorySlice";
 
 const Register: React.FC = () => {
   const dispatch = useDispatch();
   const role = useSelector(loggedRole);
+  const cities = useSelector(selectAllCities);
+  const serviceCategories = useSelector(selectAllServiceCategories)
+  const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
+  const cityStatus = useSelector((state: any) => state.cities.status)
   const [profileImage, setProfileImage] = useState('');
   const [certificateImage, setCertificateImage] = useState('');
   const [paymentImage, setPaymentImage] = useState('');
@@ -23,6 +29,17 @@ const Register: React.FC = () => {
   const [paymentImageUploaded, setPaymentImageUploaded] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(() => {
+    if (cityStatus === 'idle') {
+      dispatch(fetchCities());
+    }
+    if (serviceCategoriesStatus === 'idle') {
+      dispatch(fetchServiceCategories());
+    }
+  }, [dispatch])
+
 
   const handleProfileImageChange = async (e: { target: { files: File[]; }; }) => {
     setIsLoading(true);
@@ -107,11 +124,8 @@ const Register: React.FC = () => {
       isVip: selectedIndex > 2,
       expiredDate: new Date(d.setMonth(d.getMonth() + selectedIndex * 6 + 6)),
       rate: 0,
-
     }
     dispatch(addNewServiceSupplier(newServiceSupplier));
-
-
   }
 
   return (
@@ -191,18 +205,34 @@ const Register: React.FC = () => {
                 <Form.Control as="textarea" aria-label="With textarea" placeholder="Working Experience"
                               required onChange={e => setWorkingExperience(e.target.value)}/>
               </Form.Group>
-              <Form.Group className="mb-2" controlId="formGroupWorkingArea" as={Col} sm={12} md={6}>
-                <Form.Control type="text" placeholder="Working Area"
-                              required onChange={e => setWorkingArea(e.target.value)}/>
-              </Form.Group>
+              <Col sm={12} md={6}>
+                <Form.Select aria-label="Default select example" required defaultValue={"default"}
+                             onChange={e => setWorkingArea(e.target.value)}>
+                  <option value={"default"} disabled>~ select working area ~</option>
+                  {
+                    // @ts-ignore
+                    cities.map((plan) => <option key={plan._id} value={plan._id}>{plan.name}</option>)
+                  }
+                </Form.Select>
+              </Col>
               <hr/>
               <Col sm={12} md={6}>
-                <Form.Select aria-label="Default select example" required
-                             onChange={e => setSelectedPlan(e.target.value)}>
-                  <option disabled>~ select your plan ~</option>
+                <Form.Select aria-label="Default select example" required defaultValue={"default"}
+                             onChange={e => setSelectedPlan(e.target.value)}
+                >
+                  <option value={"default"} disabled>~ select your plan ~</option>
                   {
                     // @ts-ignore
                     planList.map((plan) => <option key={plan._id} value={plan._id}>{plan.name}</option>)
+                  }
+                </Form.Select>
+              </Col>
+              <Col sm={12} md={6}>
+                <Form.Select aria-label="Default select example" required defaultValue={"default"}>
+                  <option value={"default"} disabled>~ select service category ~</option>
+                  {
+                    serviceCategories.map((category:any) =>
+                      <option key={category._id} value={category.name}>{category.name}</option>)
                   }
                 </Form.Select>
               </Col>
