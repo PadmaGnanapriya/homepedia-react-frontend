@@ -1,16 +1,43 @@
 import React, {useEffect, useState} from "react";
-import {Button, Form, FormControl, Image, Nav, Navbar, NavDropdown, OverlayTrigger, Popover} from "react-bootstrap";
+import {
+  Button, Col,
+  Form,
+  FormControl,
+  Image,
+  Modal,
+  Nav,
+  Navbar,
+  NavDropdown,
+  OverlayTrigger,
+  Popover, Row
+} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 import logo from "../assets/images/logo2.webp";
 import {useDispatch, useSelector} from "react-redux";
 import {loggedRole, signOut} from "../store/authSlice";
+import ServiceSupplierCard from "../components/ServiceSupplierCard";
+import {selectAllServiceSuppliers} from "../store/ServiceSupplierSlice";
+import {selectAllServiceCategories} from "../store/ServiceCategorySlice";
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const role = useSelector(loggedRole);
+  const suppliers = useSelector(selectAllServiceSuppliers)
+  const [suppliersSelected, setSuppliersSelected] = useState([])
+  const serviceCategories = useSelector(selectAllServiceCategories)
+
+  const [modalShow, setModalShow] = useState(false);
+  const [searchWord, setSearchWord] = useState('');
   const handleLogOut = () => {
     dispatch(signOut());
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setSuppliersSelected(suppliers.filter((element: any) =>
+      element.fullName.toLowerCase().includes(searchWord.toLowerCase())))
+    setModalShow(true);
   }
 
   return (
@@ -40,17 +67,17 @@ const Header: React.FC = () => {
             <Nav.Link as={Link} to={'../#categories'}>Categories</Nav.Link>
             <Nav.Link as={Link} to={ROUTE_PATH.ABOUT}>About</Nav.Link>
             <Nav.Link as={Link} to={ROUTE_PATH.CONTACT}>Contact Us</Nav.Link>
-                <NavDropdown title="More" id="collasible-nav-dropdown3">
-                  <NavDropdown.Item as={Link} to={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms & Conditions</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={ROUTE_PATH.FAQ}>FAQ</NavDropdown.Item>
-                  {
-                    role === 'Viewer' &&
-                      <NavDropdown.Item as={Link} to={ROUTE_PATH.FORGOT_PASSWORD}>Forgot Password</NavDropdown.Item>
-                  }
-                </NavDropdown>
+            <NavDropdown title="More" id="collasible-nav-dropdown3">
+              <NavDropdown.Item as={Link} to={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms & Conditions</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={ROUTE_PATH.FAQ}>FAQ</NavDropdown.Item>
+              {
+                role === 'Viewer' &&
+                  <NavDropdown.Item as={Link} to={ROUTE_PATH.FORGOT_PASSWORD}>Forgot Password</NavDropdown.Item>
+              }
+            </NavDropdown>
             {
               role === 'Administrator' &&
-              <Nav.Link as={Link} to={ROUTE_PATH.DASHBOARD}>Dashboard</Nav.Link>
+                <Nav.Link as={Link} to={ROUTE_PATH.DASHBOARD}>Dashboard</Nav.Link>
             }
           </Nav>
           <Nav>
@@ -115,14 +142,15 @@ const Header: React.FC = () => {
                     </NavDropdown.Item>
                 </NavDropdown>
             }
-            <Form className="d-flex">
+            <Form className="d-flex" onSubmit={handleSubmit}>
               <FormControl
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                onChange={e => setSearchWord(e.target.value)}
               />
-              <Button><span className="icon-search h3"/> </Button>
+              <Button type="submit"><span className="icon-search h3"/> </Button>
               &nbsp;
             </Form>
             {
@@ -133,6 +161,29 @@ const Header: React.FC = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+
+      <Modal
+        show={modalShow}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body>
+          <h4 className="text-center">Search Result</h4>
+          <Row className="pt-5">
+            {
+              suppliersSelected.map((supplier: any, index: number) =>
+                <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
+            }
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => {
+            setModalShow(false);
+            setSearchWord('')
+          }}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </React.Fragment>
   )
 }
