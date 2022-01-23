@@ -3,15 +3,17 @@ import BackgroundImage from "../components/BackGroundImg";
 import image from "../assets/images/background.webp";
 import {Button, Card, Col, Form, Image, Row} from "react-bootstrap";
 import logo from "../assets/images/logo.webp";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {ROUTE_PATH} from "../constants/RoutePaths";
 import {uploadCertificate, uploadPayment, uploadServiceSupplierImage} from "../utils/ImageUploadService";
 import {toast} from "react-toastify";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addNewServiceSupplier} from "../store/ServiceSupplierSlice";
+import {loggedRole} from "../store/authSlice";
 
 const Register: React.FC = () => {
   const dispatch = useDispatch();
+  const role = useSelector(loggedRole);
   const [profileImage, setProfileImage] = useState('');
   const [certificateImage, setCertificateImage] = useState('');
   const [paymentImage, setPaymentImage] = useState('');
@@ -113,130 +115,138 @@ const Register: React.FC = () => {
   }
 
   return (
-    <BackgroundImage image={image}>
-      <Card style={{maxWidth: '900px'}} className="card-div-fluid p-3 mx-auto my-4">
-        <Image className="m-auto" width={180} src={logo}/>
-        <div className="text-center my-2">
-          <h1 className="h4">Register</h1>
-          <small>Lets create your account</small>
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Form.Group className="mb-2" controlId="formGroupName" as={Col} sm={12} md={6}>
-              <Form.Control type="text" placeholder="Full Name" required onChange={e => setFullName(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupNic" as={Col} sm={12} md={6}>
-              <Form.Control type="text" placeholder="NIC number" required onChange={e => setNic(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupPassword" as={Col} sm={12} md={6}>
-              <Form.Control type="password" placeholder="Enter Strong Password"
-                            required onChange={e => setPassword(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupRePassword" as={Col} sm={12} md={6}>
-              <Form.Control type="password" placeholder="Re enter Password"
-                            required onChange={e => setPassword2(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupContact" as={Col} sm={12} md={6}>
-              <Form.Control type="text" placeholder="Contact Number" required
-                            onChange={e => setContactNumber(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupEmail" as={Col} sm={12} md={6}>
-              <Form.Control type="email" placeholder="Enter your email" required
-                            onChange={e => setEmail(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupProfilePicture" as={Col} sm={12} md={6}>
-              <Form.Label>Profile Picture</Form.Label>
-              <Form.Control className="mb-0" type="file" accept="image/*"
-                // @ts-ignore
-                            required onChange={handleProfileImageChange}/>
-              {profileImage &&
-                  <img src={profileImage} className="img-fluid mt-2" alt="book image" style={{height: '170px'}}/>
-              }
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
-              <Form.Label className="d-block" as={Col} sm={12} md={6}>
-                <label>Gender</label></Form.Label>
-              <input type={"radio"} required onChange={() => setGender('male')}/><span>Male</span> &nbsp;&nbsp;
-              <input type={"radio"} required onChange={() => setGender('female')}/><span>Female</span>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
-              <Form.Control as="textarea" aria-label="With textarea" placeholder="Your Address"
-                            required onChange={e => setAddress(e.target.value)}/>
-            </Form.Group>
-
-            <hr/>
-            <Form.Group className="mb-3" as={Col} sm={12} md={6}>
-              <Form.Label>Working Time</Form.Label>
-              <div className="d-flex">
-                <Form.Control className="w-50" type="time" required
-                              onChange={e => setWorkingTimeStart(e.target.value)}/>
-                <Form.Control className="w-50" type="time" required onChange={e => setWorkingTimeEnd(e.target.value)}/>
-              </div>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupCopyCertificate" as={Col} sm={12} md={6}>
-              <Form.Label>Copy of Certificate</Form.Label>
-              <Form.Control className="mb-0" type="file"
-                // @ts-ignore
-                            required onChange={handleCertificateImageChange}/>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupWorkingExperience" as={Col} sm={12} md={6}>
-              <Form.Control as="textarea" aria-label="With textarea" placeholder="Working Experience"
-                            required onChange={e => setWorkingExperience(e.target.value)}/>
-            </Form.Group>
-            <Form.Group className="mb-2" controlId="formGroupWorkingArea" as={Col} sm={12} md={6}>
-              <Form.Control type="text" placeholder="Working Area"
-                            required onChange={e => setWorkingArea(e.target.value)}/>
-            </Form.Group>
-            <hr/>
-            <Col sm={12} md={6}>
-              <Form.Select aria-label="Default select example" required onChange={e => setSelectedPlan(e.target.value)}>
-                <option disabled>~ select your plan ~</option>
-                {
+    <>
+      {
+        role !== 'Viewer' &&
+          <Navigate to={ROUTE_PATH.HOME}/>
+      }
+      <BackgroundImage image={image}>
+        <Card style={{maxWidth: '900px'}} className="card-div-fluid p-3 mx-auto my-4">
+          <Image className="m-auto" width={180} src={logo}/>
+          <div className="text-center my-2">
+            <h1 className="h4">Register</h1>
+            <small>Lets create your account</small>
+          </div>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Form.Group className="mb-2" controlId="formGroupName" as={Col} sm={12} md={6}>
+                <Form.Control type="text" placeholder="Full Name" required onChange={e => setFullName(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupNic" as={Col} sm={12} md={6}>
+                <Form.Control type="text" placeholder="NIC number" required onChange={e => setNic(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupPassword" as={Col} sm={12} md={6}>
+                <Form.Control type="password" placeholder="Enter Strong Password"
+                              required onChange={e => setPassword(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupRePassword" as={Col} sm={12} md={6}>
+                <Form.Control type="password" placeholder="Re enter Password"
+                              required onChange={e => setPassword2(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupContact" as={Col} sm={12} md={6}>
+                <Form.Control type="text" placeholder="Contact Number" required
+                              onChange={e => setContactNumber(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupEmail" as={Col} sm={12} md={6}>
+                <Form.Control type="email" placeholder="Enter your email" required
+                              onChange={e => setEmail(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formGroupProfilePicture" as={Col} sm={12} md={6}>
+                <Form.Label>Profile Picture</Form.Label>
+                <Form.Control className="mb-0" type="file" accept="image/*"
                   // @ts-ignore
-                  planList.map((plan) => <option key={plan._id} value={plan._id}>{plan.name}</option>)
+                              required onChange={handleProfileImageChange}/>
+                {profileImage &&
+                    <img src={profileImage} className="img-fluid mt-2" alt="book image" style={{height: '170px'}}/>
                 }
-              </Form.Select>
-            </Col>
-            <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
-              <Form.Label className="d-block">Payment Type</Form.Label>
-              <input value="manual" name="paymentType" type="radio"
-                     required onChange={() => setPaymentType('manual')}/><span>Manual</span> &nbsp;&nbsp;
-              <input value="online" name="paymentType" type="radio"
-                     required onChange={() => setPaymentType('online')}/><span>Online</span>
-            </Form.Group>
-            <Col sm={12} md={6}/>
-            {paymentType === 'manual' &&
-                <Form.Group className="mb-3" controlId="formGroupProfilePicture" as={Col} sm={12} md={6}>
-                    <Form.Label>Upload Payment Slip</Form.Label>
-                    <Form.Control type="file" accept="image/*" placeholder="Payment Slip"
-                      // @ts-ignore
-                                  required onChange={handlePaymentImageChange}/>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
+                <Form.Label className="d-block" as={Col} sm={12} md={6}>
+                  <label>Gender</label></Form.Label>
+                <input type={"radio"} required onChange={() => setGender('male')}/><span>Male</span> &nbsp;&nbsp;
+                <input type={"radio"} required onChange={() => setGender('female')}/><span>Female</span>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
+                <Form.Control as="textarea" aria-label="With textarea" placeholder="Your Address"
+                              required onChange={e => setAddress(e.target.value)}/>
+              </Form.Group>
+
+              <hr/>
+              <Form.Group className="mb-3" as={Col} sm={12} md={6}>
+                <Form.Label>Working Time</Form.Label>
+                <div className="d-flex">
+                  <Form.Control className="w-50" type="time" required
+                                onChange={e => setWorkingTimeStart(e.target.value)}/>
+                  <Form.Control className="w-50" type="time" required
+                                onChange={e => setWorkingTimeEnd(e.target.value)}/>
+                </div>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formGroupCopyCertificate" as={Col} sm={12} md={6}>
+                <Form.Label>Copy of Certificate</Form.Label>
+                <Form.Control className="mb-0" type="file"
+                  // @ts-ignore
+                              required onChange={handleCertificateImageChange}/>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formGroupWorkingExperience" as={Col} sm={12} md={6}>
+                <Form.Control as="textarea" aria-label="With textarea" placeholder="Working Experience"
+                              required onChange={e => setWorkingExperience(e.target.value)}/>
+              </Form.Group>
+              <Form.Group className="mb-2" controlId="formGroupWorkingArea" as={Col} sm={12} md={6}>
+                <Form.Control type="text" placeholder="Working Area"
+                              required onChange={e => setWorkingArea(e.target.value)}/>
+              </Form.Group>
+              <hr/>
+              <Col sm={12} md={6}>
+                <Form.Select aria-label="Default select example" required
+                             onChange={e => setSelectedPlan(e.target.value)}>
+                  <option disabled>~ select your plan ~</option>
                   {
-                    paymentImage &&
-                      <img src={paymentImage} className="img-fluid mt-2" alt="book image" style={{height: '170px'}}/>
+                    // @ts-ignore
+                    planList.map((plan) => <option key={plan._id} value={plan._id}>{plan.name}</option>)
                   }
-                </Form.Group>
-            }
-            {paymentType === 'online' &&
-                <React.Fragment>
-                  {/*    TODO: Add here */}
-                    Online payment
-                </React.Fragment>
-            }
-            <Form.Group className="mb-3" id="formGridCheckbox">
-              <input type="checkbox" onChange={() => setIsChecked(!isChecked)}/>&nbsp;
-              <small>I have agreed to&nbsp;
-                <a target="_blank" rel="noreferrer" href={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms and
-                  Conditions</a></small>
-            </Form.Group>
-            <Col className="text-center" sm={12}>
-              <Button type="submit" className="px-5 my-3" disabled={!isChecked || isLoading}>Register</Button>
-              <small className="d-block">Do you have an account?<Link to={ROUTE_PATH.LOGIN}> Sign In</Link></small>
-            </Col>
-          </Row>
-        </Form>
-      </Card>
-    </BackgroundImage>
+                </Form.Select>
+              </Col>
+              <Form.Group className="mb-3" controlId="formGroupAddress" as={Col} sm={12} md={6}>
+                <Form.Label className="d-block">Payment Type</Form.Label>
+                <input value="manual" name="paymentType" type="radio"
+                       required onChange={() => setPaymentType('manual')}/><span>Manual</span> &nbsp;&nbsp;
+                <input value="online" name="paymentType" type="radio"
+                       required onChange={() => setPaymentType('online')}/><span>Online</span>
+              </Form.Group>
+              <Col sm={12} md={6}/>
+              {paymentType === 'manual' &&
+                  <Form.Group className="mb-3" controlId="formGroupProfilePicture" as={Col} sm={12} md={6}>
+                      <Form.Label>Upload Payment Slip</Form.Label>
+                      <Form.Control type="file" accept="image/*" placeholder="Payment Slip"
+                        // @ts-ignore
+                                    required onChange={handlePaymentImageChange}/>
+                    {
+                      paymentImage &&
+                        <img src={paymentImage} className="img-fluid mt-2" alt="book image" style={{height: '170px'}}/>
+                    }
+                  </Form.Group>
+              }
+              {paymentType === 'online' &&
+                  <React.Fragment>
+                    {/*    TODO: Add here */}
+                      Online payment
+                  </React.Fragment>
+              }
+              <Form.Group className="mb-3" id="formGridCheckbox">
+                <input type="checkbox" onChange={() => setIsChecked(!isChecked)}/>&nbsp;
+                <small>I have agreed to&nbsp;
+                  <a target="_blank" rel="noreferrer" href={ROUTE_PATH.TERMS_AND_CONDITIONS}>Terms and
+                    Conditions</a></small>
+              </Form.Group>
+              <Col className="text-center" sm={12}>
+                <Button type="submit" className="px-5 my-3" disabled={!isChecked || isLoading}>Register</Button>
+                <small className="d-block">Do you have an account?<Link to={ROUTE_PATH.LOGIN}> Sign In</Link></small>
+              </Col>
+            </Row>
+          </Form>
+        </Card>
+      </BackgroundImage>
+    </>
   );
 }
 

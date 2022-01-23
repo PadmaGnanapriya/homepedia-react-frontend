@@ -9,25 +9,22 @@ import {auth} from "./utils/firebase";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { API } from './store/api/REST_API';
+import {useDispatch, useSelector} from "react-redux";
+import {loggedRole, resetRole} from "./store/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  const userRole = useSelector(loggedRole);
   const [geoPosition, setGeoPosition] = useState({latitude: null, longitude: null});
   const routeList = routes.map((route: any, index) => {
-    return (route.component) ? (
+    return (route.component && route.role.includes(userRole)) ? (
       <Route key={index + '-page'} path={route.path} element={<route.component/>}
       />
     ) : null;
   });
 
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        user.getIdTokenResult()
-          .then((idTokenResult) => {
-            sessionStorage.setItem('userRole', idTokenResult.claims.role ? idTokenResult.claims.role : 'Viewer');
-          });
-      }
-    });
+   dispatch(resetRole());
   }, [auth])
 
   useEffect(() => {

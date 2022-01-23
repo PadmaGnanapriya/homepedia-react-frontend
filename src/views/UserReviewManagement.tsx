@@ -1,6 +1,11 @@
 import React, {forwardRef, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteUserReview, fetchAllUserReviews, selectAllUserReviews} from "../store/userReviewsSlice";
+import {
+  approveUserReview,
+  deleteUserReview,
+  fetchAllUserReviews,
+  selectAllUserReviews
+} from "../store/userReviewsSlice";
 import CustomTable from "../components/CustomTable";
 
 const UserReviewManagement: React.FC = () => {
@@ -29,6 +34,12 @@ const UserReviewManagement: React.FC = () => {
       tooltip: 'Reply email',
       onClick: (event: any, rowData: any) => window.open("mailto:" + rowData.reviewerEmail +
         "?subject=Response From Homepedia for your review"),
+    },
+    {
+      icon: forwardRef((props, ref) =>
+        <span className="icon-check" {...props}  />),
+      tooltip: 'Approve',
+      onClick: (event: any, rowData: any) => dispatch((approveUserReview(rowData._id)))
     },
     {
       icon: forwardRef((props, ref) =>
