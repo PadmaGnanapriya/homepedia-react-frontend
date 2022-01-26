@@ -7,6 +7,7 @@ import serviceSupplierReducer from "./ServiceSupplierSlice";
 import authReducer from "./authSlice";
 import faqReducer from "./faqSlice";
 import cityReducer from "./citiesSlice";
+import dashboardReducer from "./dashboardSlice";
 
 export default configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
         serviceSuppliers: serviceSupplierReducer,
         auth: authReducer,
         faqs: faqReducer,
-        cities: cityReducer
+        cities: cityReducer,
+        dashboard: dashboardReducer
     },
 })
