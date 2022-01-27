@@ -10,7 +10,7 @@ import {fetchServiceCategories, selectAllServiceCategories} from "../store/Servi
 import Loading from "../components/Loading";
 import {toast} from "react-toastify";
 import {
-  fetchAllApprovedServiceSuppliers,
+  fetchAllApprovedServiceSuppliers, fetchVipServiceSuppliers,
   selectAllServiceSuppliers
 } from "../store/ServiceSupplierSlice";
 
@@ -24,12 +24,13 @@ const Home: React.FC = () => {
   const serviceCategoriesStatus = useSelector((state: any) => state.serviceCategories.status)
   const serviceSupplierError = useSelector((state: any) => state.serviceSuppliers.error)
   const serviceCategoriesError = useSelector((state: any) => state.serviceCategories.error)
-
+  const vipServiceSuppliers = useSelector((state: any) => state.serviceSuppliers.vipServiceSuppliers)
   const suppliers = useSelector(selectAllServiceSuppliers)
 
   useEffect(() => {
     if (serviceCategoriesStatus === 'idle') {
       dispatch(fetchServiceCategories());
+      dispatch(fetchVipServiceSuppliers());
     }
     if (serviceCategoriesError) {
       toast.error(serviceCategoriesError)
@@ -49,36 +50,32 @@ const Home: React.FC = () => {
     }
   })
 
+  vipServiceSuppliers.map((element: any, index: number) => console.log(element));
+
   return (
     <Container fluid={true} className="p-0 blue-bg-color">
       <img src={bannerImage} className="img-fluid w-100"/>
       <Container fluid={true} className="py-4 px-3 px-md-5">
-        <h3 className="ps-4 text-light">Premium Members</h3>
-        <Carousel>
-          <Carousel.Item>
-            <ServiceSupplierBanner/>
-          </Carousel.Item>
-          <Carousel.Item>
-            <ServiceSupplierBanner/>
-          </Carousel.Item>
-          <Carousel.Item>
-            <ServiceSupplierBanner/>
-          </Carousel.Item>
-          <Carousel.Item>
-            <ServiceSupplierBanner/>
-          </Carousel.Item>
-          <Carousel.Item>
-            <ServiceSupplierBanner/>
-          </Carousel.Item>
-        </Carousel>
-
+        {
+          vipServiceSuppliers.length > 0 &&
+          <>
+              <h3 className="ps-4 text-light">Premium Members</h3>
+              <Carousel>
+                {
+                  vipServiceSuppliers.map((element: any, index: number) =>
+                    <Carousel.Item key={index}>
+                      <ServiceSupplierBanner serviceSupplier={element} serviceCategories={serviceCategories}/>
+                    </Carousel.Item>
+                  )}
+              </Carousel>
+          </>
+        }
         <Row className="pt-5">
           <Col sm={12} className="text-light p-3"><h3> Popular service suppliers</h3></Col>
           {
             suppliers.slice(0, 10).map((supplier: any, index: number) =>
               <ServiceSupplierCard key={'card' + index} supplier={supplier} serviceCategories={serviceCategories}/>)
           }
-
           <br/>
           <br/>
           <br/>

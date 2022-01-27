@@ -44,7 +44,7 @@ export const fetchAllApprovedServiceSuppliers = createAsyncThunk(
 
 export const fetchVipServiceSuppliers = createAsyncThunk(
   'serviceSuppliers/fetchVipServiceSuppliers', async () => {
-    const response = await API.GET('service-suppliers/vip')
+    const response = await API.GET('service-suppliers/search?isVip=true')
     return response.data
   })
 

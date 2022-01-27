@@ -146,11 +146,11 @@ const Header: React.FC = () => {
               <FormControl
                 type="search"
                 placeholder="Search"
-                className="me-2"
+                className="form-control form-control-sm me-2"
                 aria-label="Search"
                 onChange={e => setSearchWord(e.target.value)}
               />
-              <Button type="submit"><span className="icon-search h3"/> </Button>
+              <Button  className="px-2 py-0" type="submit"><span className="icon-search h4"/> </Button>
               &nbsp;
             </Form>
             {
